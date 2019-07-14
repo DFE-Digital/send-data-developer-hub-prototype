@@ -1,0 +1,62 @@
+// global styles for <a> and <p> tags
+$govuk-global-styles: true;
+
+// Import GOV.UK Frontend and any extension styles if extensions have been configured
+@import 'lib/extensions/extensions';
+
+// Patterns that aren't in Frontend
+@import 'patterns/step-by-step-navigation';
+@import 'patterns/task-list';
+@import 'patterns/related-items';
+
+// Components that aren't in Frontend
+@import 'components/cookie-banner';
+
+// Add extra styles here, or re-organise the Sass files in whichever way makes most sense to you
+
+.product-card {
+	box-sizing: border-box;
+	background-color: $govuk-brand-colour;
+	color: white;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	padding: 10px;
+	margin-bottom: 15px;
+	border-radius: 4px;
+	text-decoration: none;
+	transition: all 65ms ease-out;
+
+	&:hover {
+		background-color: darken($govuk-brand-colour, 10%);
+		transform: scale(1.025);
+	}
+
+	> * {
+		color: white;
+		padding: 2px;
+		margin: 0;
+		&:first-child {
+			margin-top: 20px;
+		}
+		&:last-child {
+			margin-bottom: 20px;
+		}
+	}
+
+	&.add-product {
+		background-color: transparent;
+		color: $govuk-brand-colour;
+		border: 2px dashed $govuk-brand-colour;
+
+		&:hover {
+			background-color: rgba($govuk-brand-colour, 0.1);
+		}
+
+		> * {
+			color: $govuk-brand-colour;
+		}
+	}
+}

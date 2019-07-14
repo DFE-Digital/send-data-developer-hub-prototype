@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+
+{% from "./macros/product-cards.njk" import productCards %}
+
+{% block pageTitle %}
+    Prototype options
+{% endblock %}
+
+{% block beforeContent %}
+
+    {{ govukPhaseBanner ({
+        tag: {
+            text: "prototype"
+        },
+        html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+    }) }}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+        <h1 class="govuk-heading-xl">Registered products</h1>
+
+    </div>
+
+</div>
+
+<div class="govuk-grid-row">
+    
+    {{ productCards ({
+        products: data.products
+    }) }}
+
+</div>
+
+{% endblock %}

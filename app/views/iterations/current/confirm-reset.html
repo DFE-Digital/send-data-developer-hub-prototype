@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+
+{% set product = data.products | getProductById(data['selected-product']) %}
+
+{% block pageTitle %}
+    Reset client secret
+{% endblock %}
+
+{% block beforeContent %}
+
+    {{ govukPhaseBanner ({
+        tag: { text: 'prototype' },
+        html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+    }) }}
+
+    {{ govukBackLink ({
+        text: 'Back',
+        href: 'javascript:history.back()'
+    }) }}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+
+        <div class="govuk-grid-column-two-thirds">
+
+            <h1 class="govuk-heading-xl">Reset client secret for {{ product.name }}</h1>
+
+            <p>
+                You should only reset the secret if you have lost it.
+            </p>
+
+            <p>
+                It will stop working as soon as we show you a new one.
+            </p>
+
+            <p>
+                You will need to update any software or app with the new secret straight away.
+            </p>
+
+            {{ govukButton ({
+                text: 'Reset client secret',
+                href: 'client-secret',
+                classes: 'govuk-button--warning' 
+            }) }}
+
+            <p>
+                <a href="javascript:history.back()">Cancel</a>
+            </p>
+
+        </div>
+
+</div>
+
+{% endblock %}

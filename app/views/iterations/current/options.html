@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+
+{% block pageTitle %}
+    Prototype options
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+
+        <div class="govuk-grid-column-two-thirds">
+
+            {{ govukBackLink ({
+                text: 'Back',
+                href: 'javascript:history.back()'
+            }) }}
+
+            <form action="home">
+
+                <h1 class="govuk-heading-xl">Prototype options</h1>
+
+                {{ govukInput ({
+                    id: 'company-name',
+                    name: 'company-name',
+                    value: data['company-name'],
+                    classes: 'govuk-input--width-20',
+                    label: {
+                        text: 'Company name',
+                        classes: 'govuk-input--width-20'
+                    }
+                }) }}
+
+                {{ govukButton ({
+                    html: 'Open prototype'
+                }) }}
+
+            </form>
+
+        </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,8 @@
+{% macro productCard(params) %}
+<div class="govuk-grid-column-one-third">
+    <a href="product-details.html?selected-product={{ params.id }}" class="product-card">
+        <h4 class="govuk-heading-s">{{ params.name }}</h4>
+        <p class="govuk-body-s">Created on {{ params.date | simpleDate }}</p>
+    </a>
+</div>
+{% endmacro %}

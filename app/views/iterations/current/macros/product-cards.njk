@@ -1,0 +1,57 @@
+{% from "./product-card.njk" import productCard %}
+
+{% macro productCards(params) %}
+
+    {% set products = params.products | addElement({id: 'add'}) %}
+
+    {% for product in products | sort(true, true, 'createdOn') %}
+
+        {% if (loop.index % 3 == 0) %}
+
+            <div class="govuk-grid-row">
+
+        {% endif %}
+
+            {% if product.id != 'add' %}
+
+                {{ productCard ({
+                    id: product.id,
+                    name: product.name | sentenceCase,
+                    date: product.createdOn
+                }) }}
+
+            {% else %}
+
+                <div class="govuk-grid-column-one-third">
+                    <a href="register-product" class="product-card add-product">
+                        <h4 class="govuk-heading-s"><span style="display: inline-block; font-size: 30px; font-weight: normal; transform: scale(1.5);">+</span><br>Register another product</h4>
+                    </a>
+                </div>
+
+            {% endif %}
+
+
+        {% if (loop.index % 3 == 0) %}
+
+            </div>
+
+        {% endif %}
+
+    {% endfor %}
+
+    <script>
+
+        var tallestProductCardHeight = 0;
+
+        $('.product-card').each( function() {
+            var heightOfCurrentProductCard = $(this).height();
+            tallestProductCardHeight = tallestProductCardHeight < heightOfCurrentProductCard ? heightOfCurrentProductCard : tallestProductCardHeight;
+            var marginBottomAmount = parseInt($(this).closest('[class*="govuk-grid-column"]').css('padding-right')) * 2;
+            $(this).css('margin-bottom', marginBottomAmount + 'px');
+        })
+
+        $('.product-card').css('height', tallestProductCardHeight + 'px');
+
+    </script>
+
+{% endmacro %}

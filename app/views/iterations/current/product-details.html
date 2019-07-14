@@ -1,0 +1,108 @@
+{% extends 'layout.html' %}
+
+{% set product = data.products | getProductById(data['selected-product']) %}
+
+{% block pageTitle %}
+    Prototype options
+{% endblock %}
+
+{% block beforeContent %}
+
+    {{ govukPhaseBanner ({
+        tag: { text: 'prototype' },
+        html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+    }) }}
+
+    {{ govukBackLink ({
+        text: 'Back',
+        href: 'javascript:history.back()'
+    }) }}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+
+        <div class="govuk-grid-column-two-thirds">
+
+            <h1 class="govuk-heading-xl">{{ product.name }}</h1>
+
+            {% set clientIDHTML %}
+            
+                <p>
+                    <span id="productID">{{ product.id }}</span>
+                </p>
+
+                <p>
+                    <a href="javascript:copyID()">Copy client ID to clipboard</a>
+                </p>
+
+                <script>
+                    function copyID() {
+                        var $temp = $("<input>");
+                        $("body").append($temp);
+                        $temp.val('{{ product.id }}').select();
+                        document.execCommand("copy");
+                        $temp.remove();
+                    }
+                </script>
+
+            {% endset %}
+
+            {% set redirectURLsHTML %}
+
+                <ul class="govuk-list">
+
+                {% for url in product.urls %}
+
+                    <li>{{ url }}</li>
+
+                {% endfor %}
+
+                </ul>
+
+            {% endset %}
+
+            {{ govukSummaryList ({
+                rows: [
+                    {
+                        key: {
+                            text: 'Client ID'
+                        },
+                        value: {
+                            html: clientIDHTML
+                        }
+                    },
+                    {
+                        key: {
+                            html: 'Redirect URL(s)<br><span class="govuk-hint">Redirects users back to the application with an authorisation code.</span>'
+                        },
+                        value: {
+                            html: redirectURLsHTML
+                        }
+                    },
+                    {
+                        key: {
+                            html: 'Email<br><span class="govuk-hint">We will send product information to this email address.</span>'
+                        },
+                        value: {
+                            html: product.email
+                        }
+                    },
+                    {
+                        key: {
+                            text: 'Product settings'
+                        },
+                        value: {
+                            html: '<p><a href="edit-product">Edit product details</a></p><p><a href="confirm-reset">Reset client secret</a></p>'
+                        }
+                    }
+                }
+            }) }}
+
+        </div>
+
+</div>
+
+{% endblock %}

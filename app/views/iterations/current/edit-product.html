@@ -1,0 +1,153 @@
+{% extends 'layout.html' %}
+
+{% set product = data.products | getProductById(data['selected-product']) %}
+
+{% block pageTitle %}
+    Prototype options
+{% endblock %}
+
+{% block beforeContent %}
+
+    {{ govukPhaseBanner ({
+        tag: { text: 'prototype' },
+        html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+    }) }}
+
+    {{ govukBackLink ({
+        text: 'Back',
+        href: 'javascript:history.back()'
+    }) }}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+
+        <div class="govuk-grid-column-two-thirds">
+
+            <form action="/edit-product" method="post">
+
+                <h1 class="govuk-heading-xl">Register MIS product</h1>
+
+                {{ govukInput ({
+                    id: 'product-name',
+                    name: 'product-name',
+                    value: product.name,
+                    classes: 'govuk-input--width-20',
+                    label: {
+                        text: 'Product name',
+                        classes: 'govuk-input--width-20'
+                    },
+                    hint: {
+                        text: 'You can use letters, numbers and spaces. Can be up to 50 characters long.'
+                    }
+                }) }}
+
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="redirect-url">
+                        Redirect URL(s)
+                    </label>
+
+                    
+                    
+                    <span id="redirect-url-hint" class="govuk-hint">
+                        Redirects users back to the application with an authorisation code.
+                    </span>
+
+                    {% for url in product.urls %}
+                        <input class="govuk-input" id="redirect-url{{ '-' + loop.index if loop.index - 1 != 0 }}" name="redirect-url[{{ loop.index - 1 }}]" type="url" aria-describedby="redirect-url-hint" {{ 'style="margin-top: 15px;"' | safe if (loop.index != 0) }} value="{{ url }}">
+                    {% endfor %}
+                </div>
+
+                <p>
+                    <a id="addButton" href="javascript:addURLRow()" class="govuk-!-margin-right-5">Add another redirect URL</a>
+                    <a id="removeButton" href="javascript:removeURLRow()">Remove last redirect URL</a>
+                </p>
+
+                <script>
+
+                    function validateButtons() {
+                        var numberOfURLRows = $('input[id*="redirect-url"]').length;
+                        if (numberOfURLRows > 1) {
+                            $('#removeButton').show()
+                        } else {
+                            $('#removeButton').hide()
+                        }
+
+                        if (numberOfURLRows >= 20) {
+                            $('#addButton').hide()
+                        } else {
+                            $('#addButton').show()
+                        }
+                    }
+
+                    function addURLRow() {
+                        var newInput = $('#redirect-url').clone();
+                        var numberOfURLRows = $('input[id*="redirect-url"]').length;
+                        newInput.attr('name', 'redirect-url[' + numberOfURLRows + ']');
+                        newInput.attr('id', 'redirect-url-' + numberOfURLRows);
+                        newInput.css('margin-top', 15 + 'px');
+                        newInput.val('');
+                        $('#redirect-url').closest('.govuk-form-group').append(newInput);
+                        validateButtons()
+                    }
+
+                    function removeURLRow() {
+                        $('input[id*="redirect-url"]:last-child').remove();
+                        validateButtons()
+                    }
+
+                    validateButtons()
+                
+                </script>
+
+                {{ govukInput ({
+                    id: 'product-email',
+                    name: 'product-email',
+                    type: 'email',
+                    value: product.email,
+                    classes: 'govuk-input--width-20',
+                    label: {
+                        text: 'Email address',
+                        classes: 'govuk-input--width-20'
+                    },
+                    hint: {
+                        text: 'We will send product information to this email address.'
+                    }
+                }) }}
+
+                <hr class="govuk-section-break govuk-section-break--visible">
+
+                {{ govukCheckboxes ({
+                    idPrefix: 'terms-agreed',
+                    name: 'terms-agreed',
+                    classes: 'govuk-!-margin-top-6',
+                    fieldset: {
+                        legend: {
+                            text: 'Confirm your understanding of the terms and conditions',
+                            isPageHeading: false,
+                            classes: 'govuk-visually-hidden'
+                        }
+                    },
+                    items: [
+                        {
+                            html: 'I understand and agree to the <a href="">terms and conditions</a>',
+                            value: 'confirmed'
+                        }
+                    ]
+                }) }}
+
+                <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-6">
+
+                {{ govukButton ({
+                    html: 'Register product'
+                }) }}
+
+            </form>
+
+        </div>
+
+</div>
+
+{% endblock %}

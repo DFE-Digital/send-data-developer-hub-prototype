@@ -1,0 +1,24 @@
+{% extends "layout.html" %} {% block pageTitle %} GOV.UK Prototype Kit {%
+endblock %} {% block content %}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<h1 class="govuk-heading-xl">
+			Developer hub prototype
+			<span class="govuk-caption-xl">Send data to DfE</span>
+		</h1>
+    
+    {{ govukButton ({
+      text: 'Open prototype',
+      href: 'iterations/current/options.html'
+    }) }}
+    
+    <h2 class="govuk-heading-m">Archive</h2>
+
+		<p>
+      <a href="https://dfe-dev-hub.herokuapp.com/">View older versions of this prototype</a>
+    </p>
+	</div>
+</div>
+
+{% endblock %}
