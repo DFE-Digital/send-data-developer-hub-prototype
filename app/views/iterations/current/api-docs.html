@@ -36,7 +36,7 @@
         <h4 class="govuk-heading-s">Common basic data set <span style="white-space: nowrap;">(CBDS) API</span></h4>
 
         {{ govukInsetText ({
-            html: '<a href="#cbds" style="font-weight: bold;">CBDS API</a><br><span class="govuk-body-s">v1.0</span>',
+            html: '<a href="api-docs.html" style="font-weight: bold;">CBDS API</a><br><span class="govuk-body-s">v1.0</span>',
             classes: 'active'
         }) }}
 
@@ -65,7 +65,7 @@
         </p>
 
         {{ govukInsetText ({
-            html: '<a href="#fr-submission">Submission API</a><br><span class="govuk-body-s">v1.0</span>'
+            html: '<a href="api-docs-fr.html">Submission API</a><br><span class="govuk-body-s">v1.0</span>'
         }) }}
 
         <h4 class="govuk-heading-s">School census API</h4>
@@ -86,6 +86,7 @@
 
     <div class="govuk-grid-column-two-thirds">
         
+        <span class="govuk-caption-l">Common basic data set (CBDS) API</span>
         <h2 class="govuk-heading-l">CBDS API v1.0</h2>
 
         <p>
@@ -150,7 +151,7 @@
         {% endset %}
 
         {{ govukDetails({
-            summaryText: "Ethnicity codes",
+            summaryText: 'Ethnicity codes',
             html: ethnicityHTML
         }) }}
 
@@ -211,8 +212,253 @@
         {% endset %}
 
         {{ govukDetails({
-            summaryText: "Exclusion category",
+            summaryText: 'Exclusion category codes',
             html: exclusionHTML
+        }) }}
+
+        {% set exclusionReasonHTML %}
+
+            <p>
+                Get a list of CBDS pupil exclusion reason codes
+            </p>
+
+            <p class="url-block">
+                {{ govukTag({
+                    text: 'get',
+                    classes: 'govuk-!-margin-right-2'
+                }) }}
+                <span class="monospaced">api/cbds/exclusionreasons</span>
+            </p>
+
+            {{ govukTable ({
+                caption: 'Response codes',
+                captionClasses: 'govuk-visually-hidden',
+                firstCellIsHeader: true,
+                head: [
+                    {
+                        text: 'Response code'
+                    },
+                    {
+                        text: 'Description'
+                    }
+                ],
+                rows: [
+                    [
+                        {
+                            text: '200'
+                        },
+                        {
+                            text: 'Success'
+                        }
+                    ],
+                    [
+                        {
+                            text: '404'
+                        },
+                        {
+                            text: 'Not found'
+                        }
+                    ],
+                    [
+                        {
+                            text: '500'
+                        },
+                        {
+                            text: 'Server error'
+                        }
+                    ]
+                ]
+            }) }}
+
+        {% endset %}
+
+        {{ govukDetails({
+            summaryText: 'Exclusion reason codes',
+            html: exclusionReasonHTML
+        }) }}
+
+        {% set languageHTML %}
+
+            <p>
+                Get a list of CBDS language lookup codes
+            </p>
+
+            <p class="url-block">
+                {{ govukTag({
+                    text: 'get',
+                    classes: 'govuk-!-margin-right-2'
+                }) }}
+                <span class="monospaced">api/cbds/languagecodes</span>
+            </p>
+
+            {{ govukTable ({
+                caption: 'Response codes',
+                captionClasses: 'govuk-visually-hidden',
+                firstCellIsHeader: true,
+                head: [
+                    {
+                        text: 'Response code'
+                    },
+                    {
+                        text: 'Description'
+                    }
+                ],
+                rows: [
+                    [
+                        {
+                            text: '200'
+                        },
+                        {
+                            text: 'Success'
+                        }
+                    ],
+                    [
+                        {
+                            text: '404'
+                        },
+                        {
+                            text: 'Not found'
+                        }
+                    ],
+                    [
+                        {
+                            text: '500'
+                        },
+                        {
+                            text: 'Server error'
+                        }
+                    ]
+                ]
+            }) }}
+
+        {% endset %}
+
+        {{ govukDetails({
+            summaryText: 'Language codes',
+            html: languageHTML
+        }) }}
+
+
+        {% set senHTML %}
+
+            <p>
+                Get a list of CBDS pupil SEN type codes
+            </p>
+
+            <p class="url-block">
+                {{ govukTag({
+                    text: 'get',
+                    classes: 'govuk-!-margin-right-2'
+                }) }}
+                <span class="monospaced">api/cbds/pupilsentypecodes</span>
+            </p>
+
+            {{ govukTable ({
+                caption: 'Response codes',
+                captionClasses: 'govuk-visually-hidden',
+                firstCellIsHeader: true,
+                head: [
+                    {
+                        text: 'Response code'
+                    },
+                    {
+                        text: 'Description'
+                    }
+                ],
+                rows: [
+                    [
+                        {
+                            text: '200'
+                        },
+                        {
+                            text: 'Success'
+                        }
+                    ],
+                    [
+                        {
+                            text: '404'
+                        },
+                        {
+                            text: 'Not found'
+                        }
+                    ],
+                    [
+                        {
+                            text: '500'
+                        },
+                        {
+                            text: 'Server error'
+                        }
+                    ]
+                ]
+            }) }}
+
+        {% endset %}
+
+        {{ govukDetails({
+            summaryText: 'Pupil SEN type codes',
+            html: senHTML
+        }) }}
+
+        {% set senProvisionHTML %}
+
+            <p>
+                Get a list of CBDS SEN provision codes
+            </p>
+
+            <p class="url-block">
+                {{ govukTag({
+                    text: 'get',
+                    classes: 'govuk-!-margin-right-2'
+                }) }}
+                <span class="monospaced">api/cbds/senprovisions</span>
+            </p>
+
+            {{ govukTable ({
+                caption: 'Response codes',
+                captionClasses: 'govuk-visually-hidden',
+                firstCellIsHeader: true,
+                head: [
+                    {
+                        text: 'Response code'
+                    },
+                    {
+                        text: 'Description'
+                    }
+                ],
+                rows: [
+                    [
+                        {
+                            text: '200'
+                        },
+                        {
+                            text: 'Success'
+                        }
+                    ],
+                    [
+                        {
+                            text: '404'
+                        },
+                        {
+                            text: 'Not found'
+                        }
+                    ],
+                    [
+                        {
+                            text: '500'
+                        },
+                        {
+                            text: 'Server error'
+                        }
+                    ]
+                ]
+            }) }}
+
+        {% endset %}
+
+        {{ govukDetails({
+            summaryText: 'Pupil SEN type codes',
+            html: senProvisionHTML
         }) }}
 
     </div>

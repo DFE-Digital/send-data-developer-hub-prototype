@@ -1,0 +1,173 @@
+{% extends 'layout.html' %} {% from "./macros/product-cards.njk" import
+productCards %} {% block pageTitle %} API documentation {% endblock %} {% block
+beforeContent %} {{ govukPhaseBanner ({ tag: { text: "prototype" }, html: 'This
+is a new service – your <a class="govuk-link" href="#">feedback</a> will help us
+to improve it.' }) }} {% endblock %} {% block content %}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<h1 class="govuk-heading-xl">API documentation</h1>
+	</div>
+</div>
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-one-third api-navigation">
+		<h4 class="govuk-heading-s">
+			Common basic data set <span style="white-space: nowrap;">(CBDS) API</span>
+		</h4>
+
+		{{ govukInsetText ({ html: '<a
+			href="api-docs.html"
+			style="font-weight: bold;"
+			>CBDS API</a
+		><br /><span class="govuk-body-s">v1.0</span>' }) }}
+
+		<h4 class="govuk-heading-s">Financial reporting API</h4>
+
+		<script>
+			function toggleApiKey(keyClass, buttonClass) {
+				var $keyObject = $('.' + keyClass)
+				var $button = $('.' + buttonClass)
+				if ($keyObject.is('.not-shown')) {
+					$button.text('Hide API key')
+					$keyObject.removeClass('not-shown')
+				} else {
+					$button.text('Reveal API key')
+					$keyObject.addClass('not-shown')
+				}
+			}
+		</script>
+
+		<p class="govuk-body-s">
+			<a
+				class="fr-api-toggle"
+				href="javascript:toggleApiKey('fr-api-key', 'fr-api-toggle')"
+				>Reveal API key</a
+			>
+		</p>
+
+		<p class="govuk-body-s not-shown fr-api-key monospaced url-block">
+			{% set frAPIKey = '' | clientSecret %}
+			{{ frAPIKey }}
+		</p>
+
+		{{ govukInsetText ({ html: '<a href="api-docs-fr.html">Submission API</a
+		><br /><span class="govuk-body-s">v1.0</span>', classes: 'active' }) }}
+
+		<h4 class="govuk-heading-s">School census API</h4>
+
+		<p class="govuk-body-s">
+			<a href="#">Reveal API key</a>
+		</p>
+
+		{{ govukInsetText ({ html: '<a href="#census-insights">Data insights API</a
+		><br /><span class="govuk-body-s">v1.0</span>' }) }} {{ govukInsetText ({
+		html: '<a href="#census-school-census">School census API</a><br /><span
+			class="govuk-body-s"
+			>v1.0</span
+		>' }) }}
+	</div>
+
+	<div class="govuk-grid-column-two-thirds">
+		<span class="govuk-caption-l">Financial reporting API</span>
+		<h2 class="govuk-heading-l">Submission API v1.0</h2>
+
+		<p class="govuk-body-s">
+			<a
+				class="fr-api-toggle"
+				href="javascript:toggleApiKey('fr-api-key', 'fr-api-toggle')"
+				>Reveal API key</a
+			>
+		</p>
+
+		<p class="govuk-body-s not-shown fr-api-key monospaced url-block">
+			{{ frAPIKey }}
+		</p>
+
+		<p>
+			Definition of API for academy trusts to submit financial returns.
+		</p>
+
+		<h3 class="govuk-heading-m">Create or Update Submission</h3>
+
+		<p>
+			Submit new financial return via API. An academy trust needs to provide
+			only one submission per collection period. Every subsequent submission
+			will overwrite the previous one.
+		</p>
+
+		<p class="url-block">
+			{{
+				govukTag({
+					text: 'get',
+					classes: 'govuk-!-margin-right-2'
+				})
+			}}
+			<span class="monospaced">api/bfr/submissions</span>
+		</p>
+
+		{{ govukTable ({ caption: 'Parameters', captionClasses:
+		'govuk-visually-hidden', firstCellIsHeader: true, head: [ { text:
+		'Parameter' }, { text: 'Type' }, { text: 'Description' } ], rows: [ [ {
+		html: '<span class="monospaced">trustUpin</span>' }, { text: 'String' }, {
+		text: 'Academy trust unique identifier' } ] ] }) }}
+
+		<h4 class="govuk-heading-s">Headers</h4>
+
+		<code>
+			<pre class="url-block">
+Content-Type: application/json
+Authorization: Bearer [access token]
+Ocp-Apim-Subscription-Key: <span class="not-shown fr-api-key">{{ frAPIKey }}</span>
+<a
+class="fr-api-toggle"
+href="javascript:toggleApiKey('fr-api-key', 'fr-api-toggle')"
+>Reveal API key</a
+></pre>
+		</code>
+
+		{{
+			govukTable({
+				caption: 'Response codes',
+				captionClasses: 'govuk-visually-hidden',
+				firstCellIsHeader: true,
+				head: [
+					{
+						text: 'Response code'
+					},
+					{
+						text: 'Description'
+					}
+				],
+				rows: [
+					[
+						{
+							text: '200'
+						},
+						{
+							text: 'Submission updated successfully'
+						}
+					],
+					[
+						{
+							text: '201'
+						},
+						{
+							text: 'Submission received successfully'
+						}
+					],
+					[
+						{
+							text: '400'
+						},
+						{
+							text: 'Bad input request'
+						}
+					]
+				]
+			})
+		}}
+	</div>
+</div>
+
+{% endblock %}
